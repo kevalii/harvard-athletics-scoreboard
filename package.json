@@ -1,5 +1,5 @@
 {
-  "name": "minimal-react-webpack-babel-setup",
+  "name": "harvard-athletics-scoreboard",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,23 +8,23 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "keywords": [],
-  "author": "",
+  "author": "hodp",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.1.2",
+    "@babel/core": "^7.4.3",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/plugin-transform-runtime": "^7.4.3",
-    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.4",
+    "babel-loader": "^8.0.5",
     "css-loader": "^2.1.1",
     "file-loader": "^3.0.1",
     "image-webpack-loader": "^4.6.0",
-    "react-hot-loader": "^4.3.11",
+    "react-hot-loader": "^4.8.3",
     "style-loader": "^0.23.1",
-    "webpack": "^4.23.1",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.3.0"
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.3.1"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",

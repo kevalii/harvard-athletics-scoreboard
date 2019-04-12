@@ -3,7 +3,6 @@ import './Scoreboard-app.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Scoreboard from './Scoreboard-app'
-import Blah from './Bullshit-app'
 
 const title = 'scoreboard';
 
