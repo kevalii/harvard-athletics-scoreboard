@@ -2,15 +2,14 @@ import React, {Component} from 'react'
 import Table from 'react-bootstrap/Table'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-import {call_urls, nurls, get_urls} from './scores-fetcher'
+import sf from './scores-fetcher'
 import logo from './halogo.png'
 
-let categories = Object.keys(nurls).slice(0, 3)
+let categories = Object.keys(sf.nurls).slice(0, 3)
 
 class Scoreboard extends Component {
   constructor(props) {
     super(props)
-    this.categories = this.map
     this.state = {key: 'welcome'}
   }
   render = () => {
@@ -52,8 +51,8 @@ class Sportsdata extends Component {
   }
   render = () => {
     if (this.props.selected && !this.state.fetched) {
-      let seasons_pages = get_urls(nurls[this.props.category_name], 5)
-      call_urls(seasons_pages).then(result => {
+      let seasons_pages = sf.get_urls(sf.nurls[this.props.category_name], 5)
+      sf.call_urls(seasons_pages).then(result => {
         this.setState({data: result, fetched: true})
       })
       return (
@@ -65,9 +64,13 @@ class Sportsdata extends Component {
         </div>
       )
     }
+    else if (!this.props.selected && !this.state.fetched) {
+      return (<div></div>)
+    }
     else {
-      // var scores_categories = Object.keys(this.state.data)
-      // scores_categories = scores_categories.slice(1, scores_categories.length - 1)
+      const seasons = Object.keys(this.state.data)
+      var scores_categories = Object.keys(this.state.data[seasons[0]])
+      scores_categories = scores_categories.slice(1, scores_categories.length - 1)
       return (
         <div className="container">
           <div className="sportsdataTab">
@@ -76,11 +79,21 @@ class Sportsdata extends Component {
               <thead>
                 <tr>
                   <th>Season</th>
-                </tr>
+                    {scores_categories.map(category => {
+                    return (<th key={category}>{category}</th>)
+                    })}
+                  </tr>
               </thead>
               <tbody>
-                <tr>
-                </tr>
+                {seasons.map(season => {
+                  return (
+                    <tr>
+                      <td>{season}</td>
+                      {scoresComponent({categories: scores_categories,
+                                     data: this.state.data[season]})}
+                    </tr>
+                  )
+                })}
               </tbody>
             </Table>
           </div>
@@ -90,6 +103,14 @@ class Sportsdata extends Component {
   }
 }
 
+function scoresComponent (props) {
+  return (
+    props.categories.map(category => {
+      return (<td>{props.data[category]}</td>)
+    })
+  )
+
+}
 function loaderComponent (props) {
   return (
     <img className="loader" src={logo}>
@@ -97,12 +118,4 @@ function loaderComponent (props) {
   )
 }
 
-// {scores_categories.map(el => {
-//   return (<th id={el}>{el}</th>)
-// })}
-// 
-// <td>2018-19</td>
-// {scores_categories.map(el => {
-//   return (<td>{this.state.data[el]}</td>)
-// })}
 export default Scoreboard

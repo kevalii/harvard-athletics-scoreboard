@@ -1,6 +1,16 @@
 import rp from 'request-promise';
 import cheerio from 'cheerio';
 
+// Array.prototype.foldLeft = function (sum, callback) {
+//   var head,
+//       list = Array.prototype.slice.call(this);
+//
+//   if (list.length) {
+//     head = list.shift(1);
+//     return list.foldLeft(callback(sum, head), callback);
+//   }
+//   return sum;
+// };
 let nurls = {
   "Baseball": "bsb",
   "Men's Basketball": "mbkb",
@@ -71,6 +81,7 @@ const get_urls = (sport, n) => {
   return ranges.reduce((acc, cur, idx, src) => {
     if (idx == 1) {
       acc = {}
+      acc[ranges[0]] = generate_url(sport, ranges[0])
     }
     acc[cur] = generate_url(sport, cur)
     return acc
@@ -78,7 +89,16 @@ const get_urls = (sport, n) => {
 }
 
 const call_urls = async urls => {
-  return Promise.all(Object.keys(urls).map(async url => scrape_data(urls[url])))
+  let ranges = Object.keys(urls)
+  let data = await Promise.all(ranges.map(async url => scrape_data(urls[url])))
+  return data.reduce((acc, cur, idx, src) => {
+    if (idx == 1) {
+      acc = {}
+      acc[ranges[0]] = data[0]
+    }
+    acc[ranges[idx]] = cur
+    return acc
+  })
 }
 
 const test_call = async () => {
