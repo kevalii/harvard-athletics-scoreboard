@@ -1,0 +1,17 @@
+.sportsdataTab {
+  padding: 40px;
+  margin: inherit;
+}
+
+
+.loader {
+  width: 5vw;
+  height: 5vw;
+  animation: spin 1s linear infinite;
+  padding: 1vw;
+}
+
+@keyframes spin {
+  0% {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
+}
