@@ -3,7 +3,6 @@
   margin: inherit;
 }
 
-
 .loader {
   width: 5vw;
   height: 5vw;
@@ -14,4 +13,55 @@
 @keyframes spin {
   0% {transform: rotate(0deg);}
   100% {transform: rotate(360deg);}
+}
+
+[role=tab] {
+  font-size: 18px;
+}
+
+.nav-tabs {
+  display: block;
+  position: fixed;
+  float: left;
+  left: 0;
+  width: 225px;
+  height: 100vh;
+  margin: auto;
+  overflow-y: scroll;
+
+  background-color: #B22222;
+  color: white;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: inherit;
+  border: none;
+  color: white;
+  text-decoration: underline;
+}
+
+.nav-link:hover {
+  border: none;
+  text-decoration: underline;
+  color: inherit;
+}
+
+a {
+  color: white;
+}
+
+#scoreboard-tabs-tab-welcome {
+  font-size: 36px;
+  color: white;
+}
+
+#scoreboard-tabs-tabpane-welcome {
+  margin-left: 45px;
+  margin-top: 25px;
+}
+
+.tab-content {
+  position: fixed;
+  left: 200px;
+  overflow: scroll;
 }
