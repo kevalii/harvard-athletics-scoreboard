@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
+import Graph from "./Graph-app"
 import Table from 'react-bootstrap/Table'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-import sf from './scores-fetcher'
+import {call_urls, nurls, get_urls, get_wins} from './scores-fetcher'
 import logo from './halogo.png'
 
-let categories = Object.keys(sf.nurls).slice(0, 3)
+let categories = Object.keys(nurls)//.slice(0, 3)
 
 class Scoreboard extends Component {
   constructor(props) {
@@ -51,8 +52,8 @@ class Sportsdata extends Component {
   }
   render = () => {
     if (this.props.selected && !this.state.fetched) {
-      let seasons_pages = sf.get_urls(sf.nurls[this.props.category_name], 5)
-      sf.call_urls(seasons_pages).then(result => {
+      let seasons_pages = get_urls(nurls[this.props.category_name], 5)
+      call_urls(seasons_pages).then(result => {
         this.setState({data: result, fetched: true})
       })
       return (
@@ -69,8 +70,7 @@ class Sportsdata extends Component {
     }
     else {
       const seasons = Object.keys(this.state.data)
-      var scores_categories = Object.keys(this.state.data[seasons[0]])
-      scores_categories = scores_categories.slice(1, scores_categories.length - 1)
+      const scores_categories = this.state.data[seasons[0]].categories
       return (
         <div className="container">
           <div className="sportsdataTab">
@@ -86,16 +86,18 @@ class Sportsdata extends Component {
               </thead>
               <tbody>
                 {seasons.map(season => {
+                  let scoresProps = {categories: scores_categories,
+                                    data: this.state.data[season]}
                   return (
                     <tr>
                       <td>{season}</td>
-                      {scoresComponent({categories: scores_categories,
-                                     data: this.state.data[season]})}
+                      {scoresComponent(scoresProps)}
                     </tr>
                   )
                 })}
               </tbody>
             </Table>
+            <Graph data={this.state.data}/>
           </div>
         </div>
       )
@@ -106,7 +108,7 @@ class Sportsdata extends Component {
 function scoresComponent (props) {
   return (
     props.categories.map(category => {
-      return (<td>{props.data[category]}</td>)
+      return (<td key={category}>{props.data[category]}</td>)
     })
   )
 

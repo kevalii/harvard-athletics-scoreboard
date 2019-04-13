@@ -1,16 +1,8 @@
 import rp from 'request-promise';
 import cheerio from 'cheerio';
 
-// Array.prototype.foldLeft = function (sum, callback) {
-//   var head,
-//       list = Array.prototype.slice.call(this);
-//
-//   if (list.length) {
-//     head = list.shift(1);
-//     return list.foldLeft(callback(sum, head), callback);
-//   }
-//   return sum;
-// };
+const NOISE = ["undefined", "Full Scores and Schedule »"]
+
 let nurls = {
   "Baseball": "bsb",
   "Men's Basketball": "mbkb",
@@ -27,7 +19,6 @@ let nurls = {
   "Softball": "sball",
   "Women's Volleyball": "wvball"
 }
-
 
 /** cors_query
  * The current solution for getting gocrimson data is clientside web-scraping
@@ -54,11 +45,16 @@ function scrape_data (url) {
         })
         categories[data[0]] = data[1]
       })
+      categories["categories"] = Object.keys(categories)
+                                       .filter(el => !NOISE.includes(el))
       resolve(categories)
     }).catch(e => reject(e))
   })
 }
 
+const get_wins = season => {
+  return parseInt(season["Overall (Pct.)"].split('-')[0])
+}
 /** get_urls
  * Given a sport and some number n, get the urls for the schedules for the given
  * sport for the last n academic years. Note that not all urls will be valid.
@@ -106,5 +102,5 @@ const test_call = async () => {
 }
 
 // test_call ()
-// scrape_data("https://www.gocrimson.com/sports/bsb/2017-18/teams/harvard").then(data => console.log(data))
-export default {call_urls, nurls, get_urls};
+scrape_data("https://www.gocrimson.com/sports/bsb/2017-18/teams/harvard").then(data => console.log(get_wins(data)))
+export {call_urls, nurls, get_urls, get_wins};
