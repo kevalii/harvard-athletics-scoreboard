@@ -22,7 +22,7 @@ class Scoreboard extends Component {
     return (
       <div className="container">
         <Tabs {...tabs_props}>
-          <Tab eventKey="welcome" title="Welcome" key={"welcome"}>
+          <Tab eventKey="welcome" title="Scoreboard" key={"welcome"}>
             <p>{"Sexy content"}</p>
             {loaderComponent()}
           </Tab>
