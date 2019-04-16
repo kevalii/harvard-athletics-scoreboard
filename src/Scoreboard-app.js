@@ -5,8 +5,9 @@ import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import {call_urls, nurls, get_urls, get_wins} from './scores-fetcher'
 import logo from './halogo.png'
+import pilgrim from './pilgrim.png'
 
-let categories = Object.keys(nurls)//.slice(0, 3)
+let categories = Object.keys(nurls)
 
 class Scoreboard extends Component {
   constructor(props) {
@@ -24,8 +25,11 @@ class Scoreboard extends Component {
       <div className="container">
         <Tabs {...tabs_props}>
           <Tab eventKey="welcome" title="Scoreboard" key={"welcome"}>
-            <p>{"Sexy content"}</p>
-            {loaderComponent()}
+            <h4>This is a Harvard Athletics scoreboard.</h4>
+            <p>It's rather WIP but hopefully it serves a proof of concept.</p>
+            <p>Go Crimson!</p>
+            <img src={pilgrim} className="loader"></img>
+            <small>Approved by John Harvard</small>
           </Tab>
           {categories.map(el => {
             let el_key = el.toLowerCase();
